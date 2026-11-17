@@ -20,22 +20,24 @@ enableMotionButton.addEventListener('click', () => {
 function handleMotion(event) {
     const { acceleration, rotationRate } = event;
     
-    document.getElementById('a-x').textContent = acceleration.x?.toFixed(2) || '—';
-    document.getElementById('a-y').textContent = acceleration.y?.toFixed(2) || '—';
-    document.getElementById('a-z').textContent = acceleration.z?.toFixed(2) || '—';
+    document.getElementById('a-x').textContent = updateIfChanged('a-x', acceleration.x);
+    document.getElementById('a-y').textContent = updateIfChanged('a-y', acceleration.y);
+    document.getElementById('a-z').textContent = updateIfChanged('a-z', acceleration.z);
 
-    document.getElementById('r-alpha').textContent = `Alpha: ${rotationRate.alpha?.toFixed(2) || '—'}`;
-    document.getElementById('r-beta').textContent = `Beta: ${rotationRate.beta?.toFixed(2) || '—'}`;
-    document.getElementById('r-gamma').textContent = `Gamma: ${rotationRate.gamma?.toFixed(2) || '—'}`;
+    document.getElementById('r-alpha').textContent = updateIfChanged('r-alpha', rotationRate.alpha, 5.0);
+    document.getElementById('r-beta').textContent = updateIfChanged('r-beta', rotationRate.beta, 5.0);
+    document.getElementById('r-gamma').textContent = updateIfChanged('r-gamma', rotationRate.gamma, 5.0);
 }
 
-function updateIfChanged(elementId, newValue) {
+function updateIfChanged(elementId, newValue, threshold = CHANGE_THRESHOLD) {
     if(newValue === null || newValue === undefined) {
         return;
     }
 
     const previousValue = lastValues[elementId];
-    if (previousValue === undefined || Math.abs(newValue - previousValue) >= CHANGE_THRESHOLD) {
+
+    if (previousValue === undefined || 
+        Math.abs(newValue - previousValue) >= threshold) {
         document.getElementById(elementId).textContent = newValue.toFixed(2);
         lastValues[elementId] = newValue;
     }

@@ -32,7 +32,7 @@ button:hover {
     padding: 10px;
     border: 1px solid #201f1f;
     border-radius: 5px;
-    width: 50%;
+    width: 10%;
     height: auto;
     align-items: center;
     background-color: #fefefe;
@@ -42,3 +42,8 @@ button:hover {
     justify-content: center;
 }
 
+@media (max-width: 600px) {
+    #acceleration, #rotation {
+        width: 80%;
+    }
+}
