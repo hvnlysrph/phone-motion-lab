@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Phone Motion Lab</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
     <h1>Phone Motion Lab</h1>
-    <button>Enable Motion</button>
+    <button id="enable-motion">Enable Motion</button>
     <section id="acceleration">
-        <div id="a-x">X: 0</div>
-        <div id="a-y">Y: 0</div>
-        <div id="a-z">Z: 0</div>
+        <h2>Acceleration</h2>
+        <div>X: <span id="a-x">—</span></div>
+        <div>Y: <span id="a-y">—</span></div>
+        <div>Z: <span id="a-z">—</span></div>
     </section>
     <section id="rotation">
+        <h2>Rotation</h2>
         <div id="r-alpha">Alpha: 0</div>
         <div id="r-beta">Beta: 0</div>
         <div id="r-gamma">Gamma: 0</div>
     </section>
 </body>
+
 </html>
