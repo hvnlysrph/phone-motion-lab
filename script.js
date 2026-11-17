@@ -14,19 +14,25 @@ enableMotionButton.addEventListener('click', () => {
                 }
             })
             .catch(console.error);
+    } else {
+        // Handle non-iOS devices
+        window.addEventListener('devicemotion', handleMotion);
     }
 });
 
 function handleMotion(event) {
     const { acceleration, rotationRate } = event;
     
-    document.getElementById('a-x').textContent = "X: " + updateIfChanged('a-x', acceleration.x);
-    document.getElementById('a-y').textContent = "Y: " + updateIfChanged('a-y', acceleration.y);
-    document.getElementById('a-z').textContent = "Z: " + updateIfChanged('a-z', acceleration.z);
-
-    document.getElementById('r-alpha').textContent = "Alpha: " + updateIfChanged('r-alpha', rotationRate.alpha, 5.0);
-    document.getElementById('r-beta').textContent = "Beta: " + updateIfChanged('r-beta', rotationRate.beta, 5.0);
-    document.getElementById('r-gamma').textContent = "Gamma: " + updateIfChanged('r-gamma', rotationRate.gamma, 5.0);
+    if(acceleration) {
+        updateIfChanged('a-x', acceleration.x);
+        updateIfChanged('a-y', acceleration.y);
+        updateIfChanged('a-z', acceleration.z);
+    }
+    if(rotationRate) {
+        updateIfChanged('r-alpha', rotationRate.alpha);
+        updateIfChanged('r-beta', rotationRate.beta);
+        updateIfChanged('r-gamma', rotationRate.gamma);
+    }
 }
 
 function updateIfChanged(elementId, newValue, threshold = CHANGE_THRESHOLD) {
@@ -34,13 +40,23 @@ function updateIfChanged(elementId, newValue, threshold = CHANGE_THRESHOLD) {
         return;
     }
 
-    let elementId = elementId;
+    
 
     const previousValue = lastValues[elementId];
 
     if (previousValue === undefined || 
         Math.abs(newValue - previousValue) >= threshold) {
-        document.getElementById(elementId).textContent = elementId + ": " + newValue.toFixed(2);
+
+            const label = {
+                'a-x': 'X',
+                'a-y': 'Y',
+                'a-z': 'Z',
+                'r-alpha': 'Alpha',
+                'r-beta': 'Beta',
+                'r-gamma': 'Gamma'
+            }[elementId];
+            
+        document.getElementById(elementId).textContent = label + ": " + newValue.toFixed(2);
         lastValues[elementId] = newValue;
     }
 }
