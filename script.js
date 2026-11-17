@@ -34,11 +34,13 @@ function updateIfChanged(elementId, newValue, threshold = CHANGE_THRESHOLD) {
         return;
     }
 
+    let elementId = elementId;
+
     const previousValue = lastValues[elementId];
 
     if (previousValue === undefined || 
         Math.abs(newValue - previousValue) >= threshold) {
-        document.getElementById(elementId).textContent = newValue.toFixed(2);
+        document.getElementById(elementId).textContent = elementId + ": " + newValue.toFixed(2);
         lastValues[elementId] = newValue;
     }
 }
